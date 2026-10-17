@@ -95,8 +95,9 @@ def run_git_diff(staged: bool = True, path: Optional[str] = None) -> str:
         # it has to call git_diff again, one file at a time.
         return (
             f"OK: {diff[:MAX_DIFF_CHARS]}\n"
-            f"...(TRUNCATED at {MAX_DIFF_CHARS} chars. "
-            "Call git_diff again with 'path' to see individual files.)"
+            f"...(TRUNCATED at {MAX_DIFF_CHARS} chars. The diff is incomplete. "
+            "Do NOT commit yet. Call git_diff again with 'path' for each file "
+            "you have not seen.)"
         )
     return f"OK: {diff}"
 

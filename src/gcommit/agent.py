@@ -22,7 +22,9 @@ DEFAULT_MODEL = "openrouter/free"
 
 SYSTEM_PROMPT = (
     "You write commit messages. Inspect the diff first, "
-    "follow conventional commits, never push"
+    "follow conventional commits, never push. "
+    "If a diff result says it was TRUNCATED, call git_diff again with "
+    "'path' for every file in the diff, one at a time, before you commit."
 )
 USER_PROMPT = "Commit the staged changes with a good message"
 
@@ -86,7 +88,9 @@ def agent_loop(
                 # Every tool_call needs a matching tool message, so answer it.
                 result = f"ERROR: unsupported tool call type '{call.type}'"
             else:
-                log(f"  -> model requested {call.function.name}({call.function.arguments})")
+                log(
+                    f"  -> model requested {call.function.name}({call.function.arguments})"
+                )
                 result = execute_tool(call.function.name, call.function.arguments)
                 log(f"  <- tool returned {len(result)} chars: {result[:80]!r}")
 
@@ -98,8 +102,12 @@ def agent_loop(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="An AI agent that commits your staged changes")
-    parser.add_argument("-v", "--verbose", action="store_true", help="show each loop step")
+    parser = argparse.ArgumentParser(
+        description="An AI agent that commits your staged changes"
+    )
+    parser.add_argument(
+        "-v", "--verbose", action="store_true", help="show each loop step"
+    )
     parser.add_argument("--max-steps", type=int, default=MAX_STEPS)
     args = parser.parse_args()
 

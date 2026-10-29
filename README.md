@@ -43,13 +43,15 @@ All of these live in the code, so none of them depend on the model behaving well
 
 1. Create an API key on the OpenRouter API Keys page. Copy it right away, because it is shown once. For a demo, set a short expiration. For real projects, set a credit limit.
 
-2. Clone the repo and install dependencies:
+2. Clone the repo into a folder named `gcommit` and install dependencies:
 
    ```bash
-   git clone git@github.com:nononsense-ai/git-commit-agent.git
+   git clone https://github.com/nononsense-ai/git-commit-agent.git gcommit
    cd gcommit
    uv sync
    ```
+
+   The `gcommit` at the end of the clone command renames the folder. If you already cloned it under the default name, rename the folder to `gcommit` before the next step.
 
 3. Put the key in a `.env` file at the project root:
 
